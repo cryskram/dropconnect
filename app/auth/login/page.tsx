@@ -39,7 +39,10 @@ const LoginPage = () => {
           <BsGoogle className="text-xl" />
           <h1>Sign in with Google</h1>
         </button>
-        <button className="flex items-center gap-2 p-2 rounded-xl bg-slate-800">
+        <button
+          onClick={() => handleAuth("github")}
+          className="flex items-center gap-2 p-2 rounded-xl bg-slate-800"
+        >
           <BsGithub className="text-xl" />
           <h1>Sign in with Github</h1>
         </button>
