@@ -2,6 +2,7 @@ import Navbar from "@/components/Navbar";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Nunito } from "next/font/google";
+import AuthProvider from "@/components/provider/AuthProvider";
 
 const nunito = Nunito({ subsets: ["latin"] });
 
@@ -35,9 +36,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={`${nunito.className} bg-bg text-mWhite`}>
-        <Navbar />
-        <main className="flex flex-col w-3/5 mx-auto mt-10">{children}</main>
+      <body className={`${nunito.className} bg-slate-900 text-mWhite`}>
+        <AuthProvider>
+          <Navbar />
+          <main className="flex flex-col w-3/5 mx-auto mt-10">{children}</main>
+        </AuthProvider>
       </body>
     </html>
   );
