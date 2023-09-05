@@ -57,7 +57,10 @@ export const authOptions: NextAuthOptions = {
       if (user) {
         token.sub = user.id;
       }
-      return token;
+      return {
+        ...token,
+        user,
+      };
     },
   },
 };

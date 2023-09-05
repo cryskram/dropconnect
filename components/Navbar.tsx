@@ -1,34 +1,27 @@
-// "use client";
-
 import Image from "next/image";
 import Link from "next/link";
 import { getServerSession } from "next-auth";
+import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 // import { useState } from "react";
 
 const Navbar = async () => {
   // const [navbar, setNavbar] = useState(false);
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
   return (
     <div className="px-6 py-1 m-2 bg-slate-800 rounded-3xl">
       <div className="flex items-center justify-between">
-        <div className="flex items-center">
-          <Image src="/logo.png" width={75} height={128} alt="logo" />
+        <Link href="/" className="flex items-center">
+          <Image src="/logo.png" width={56} height={128} alt="logo" />
           <div className="-ml-1">
             <h1 className="text-xl">DropConnect</h1>
             <p className="text-slate-400 text-md -mt-1">Stay in Touch</p>
           </div>
-        </div>
+        </Link>
         {session ? (
           <Link
-            href="/auth/profile"
+            href={`/user/${session.user.id}`}
             className="flex items-center gap-2 bg-slate-700 px-4 py-2 rounded-full"
           >
-            {/* <Link
-              className="bg-mRed hover:bg-transparent transition-all duration-200 font-semibold p-2 rounded-2xl"
-              href="/auth/logout"
-            >
-              Logout
-            </Link> */}
             <Image
               className="rounded-full border-2 border-slate-300"
               src={session.user?.image as string}

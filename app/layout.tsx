@@ -39,7 +39,7 @@ export default function RootLayout({
       <body className={`${nunito.className} bg-slate-900 text-mWhite`}>
         <AuthProvider>
           <Navbar />
-          <main className="flex flex-col w-3/5 mx-auto mt-10">{children}</main>
+          <main className="flex flex-col mx-auto p-10">{children}</main>
         </AuthProvider>
       </body>
     </html>

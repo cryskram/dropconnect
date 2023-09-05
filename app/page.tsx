@@ -1,7 +1,30 @@
-export default function Home() {
+import prisma from "@/lib/prisma";
+import { Post } from "@prisma/client";
+
+const getPosts = () => {
+  const posts = prisma.post.findMany({
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+  return posts;
+};
+
+export default async function Home() {
+  const posts = await getPosts();
   return (
     <div>
-      <h1>The quick brown fox jumps over the lazy dog</h1>
+      {!posts.length ? (
+        <h1>No posts currently</h1>
+      ) : (
+        <div>
+          {posts.map((post: Post) => (
+            <div key={post.id}>
+              <h1>{post.content}</h1>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
