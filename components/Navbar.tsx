@@ -1,3 +1,5 @@
+// "use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import { getServerSession } from "next-auth";
@@ -38,12 +40,6 @@ const Navbar = async () => {
               href="/auth/login"
             >
               Sign In
-            </Link>
-            <Link
-              className="border-2 border-mGreen font-semibold p-2 rounded-2xl"
-              href="/auth/register"
-            >
-              Sign Up
             </Link>
           </div>
         )}

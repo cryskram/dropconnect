@@ -12,6 +12,7 @@ datasource db {
 
 model Profile {
   id        String  @id @default(cuid())
+  username  String  @unique
   bio       String? @default("")
   age       Int?    @default(0)
   gender    String?
@@ -25,6 +26,7 @@ model Post {
   id        String    @id @default(cuid())
   content   String
   tags      String[]  @default([])
+  likes     Int       @default(0)
   author    User      @relation(fields: [authorId], references: [id])
   authorId  String
   comments  Comment[]
@@ -81,9 +83,9 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
-  profile       Profile?
   posts         Post[]
   comments      Comment[]
+  profile       Profile?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
 }

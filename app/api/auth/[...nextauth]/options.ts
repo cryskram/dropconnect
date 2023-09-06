@@ -47,10 +47,23 @@ export const authOptions: NextAuthOptions = {
           },
         });
 
+        await prisma.profile.upsert({
+          where: { userId: session.user.id },
+          update: {},
+          create: {
+            username: session.user.name
+              .trim()
+              .replaceAll(" ", "_")
+              .toLowerCase() as string,
+            userId: session.user.id,
+          },
+        });
+
         session.profile = additionalData?.profile || null;
         session.posts = additionalData?.posts || null;
         session.comments = additionalData?.comments || null;
       }
+
       return session;
     },
     async jwt({ user, token }) {
