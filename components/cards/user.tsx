@@ -42,8 +42,8 @@ const UserCard = ({
         </div>
         <div className="mt-4">
           <h1 className="text-2xl">{name}</h1>
-          <p>{profile?.username}</p>
-          <p className="mx-auto w-3/4 text-slate-400">{profile?.bio}</p>
+          <p className="text-slate-300">@{profile?.username}</p>
+          <p className="text-slate-400 mt-2 mx-4">{profile?.bio}</p>
         </div>
         <div className="mt-4 flex flex-col gap-1">
           {profile?.twitter ? (
@@ -77,7 +77,7 @@ const UserCard = ({
           <div>
             <h1 className="text-xl">Joined</h1>
             <p className="text-sm text-slate-400">
-              {new Date(createdAt).toLocaleDateString()}
+              {new Date(createdAt).toDateString()}
             </p>
           </div>
           <div>
@@ -106,7 +106,9 @@ const UserCard = ({
               </div>
             ) : (
               <div>
-                <h1>Follow</h1>
+                <button className="px-4 py-2 bg-primary rounded-xl font-semibold">
+                  Follow
+                </button>
               </div>
             )}
           </div>

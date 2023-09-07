@@ -1,7 +1,9 @@
+import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import PostCard from "@/components/cards/post";
 import UserCard from "@/components/cards/user";
 import prisma from "@/lib/prisma";
 import { Post } from "@prisma/client";
+import { getServerSession } from "next-auth";
 import React from "react";
 
 const getUser = (id: string) => {
@@ -17,6 +19,7 @@ const getUser = (id: string) => {
       posts: {
         include: {
           comments: true,
+          like: true,
         },
         orderBy: {
           createdAt: "desc",
@@ -30,6 +33,7 @@ const getUser = (id: string) => {
 
 const UserPage = async ({ params }: { params: { id: string } }) => {
   const userData = await getUser(params.id);
+  const session = await getServerSession(authOptions);
   return (
     <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
       <div className="col-span-3 md:col-span-1">
@@ -49,8 +53,7 @@ const UserPage = async ({ params }: { params: { id: string } }) => {
               image={userData.image as string}
               post={post}
               author={userData.profile?.username as string}
-              mUserId={params.id}
-              comments={post.comments}
+              mUserId={session?.user.id}
             />
           </div>
         ))}

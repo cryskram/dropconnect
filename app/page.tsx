@@ -10,6 +10,7 @@ const getPosts = () => {
     },
     include: {
       comments: true,
+      like: true,
       author: {
         select: {
           profile: {
@@ -43,7 +44,6 @@ export default async function Home() {
                     image={post.author.image as string}
                     author={post.author.profile?.username}
                     mUserId={session.user.id}
-                    comments={post.comments}
                   />
                 </div>
               ))}
@@ -56,7 +56,6 @@ export default async function Home() {
                     post={post}
                     image={post.author.image as string}
                     author={post.author.profile?.username}
-                    comments={post.comments}
                   />
                 </div>
               ))}

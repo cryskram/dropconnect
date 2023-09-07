@@ -22,16 +22,24 @@ model Profile {
   userId    String  @unique
 }
 
+model Like {
+  id     String @id @default(cuid())
+  user   User   @relation(fields: [userId], references: [id])
+  post   Post   @relation(fields: [postId], references: [id])
+  userId String
+  postId String
+}
+
 model Post {
   id        String    @id @default(cuid())
   content   String
   tags      String[]  @default([])
-  likes     Int       @default(0)
   author    User      @relation(fields: [authorId], references: [id])
   authorId  String
   comments  Comment[]
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
+  like      Like[]
 }
 
 model Comment {
@@ -88,6 +96,7 @@ model User {
   profile       Profile?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
+  like          Like[]
 }
 
 model VerificationToken {
