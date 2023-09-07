@@ -8,8 +8,6 @@ import axios from "axios";
 import Link from "next/link";
 import { useState } from "react";
 
-require("dotenv").config();
-
 interface PostProp {
   id: string;
   content: string;
