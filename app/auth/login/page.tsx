@@ -12,7 +12,7 @@ const LoginPage = () => {
   };
   return (
     <div>
-      <div className="w-max flex flex-col gap-4 mx-auto">
+      <div className="w-max flex flex-col gap-4 mx-auto min-h-screen items-center justify-center">
         <button
           onClick={() => handleAuth("google")}
           className="flex items-center gap-2 p-2 rounded-xl bg-primary"
@@ -22,7 +22,7 @@ const LoginPage = () => {
         </button>
         <button
           onClick={() => handleAuth("github")}
-          className="flex items-center gap-2 p-2 rounded-xl bg-slate-800"
+          className="flex items-center gap-2 p-2 rounded-xl bg-slate-700"
         >
           <BsGithub className="text-xl" />
           <h1>Sign in with Github</h1>

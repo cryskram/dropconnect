@@ -30,7 +30,7 @@ const CreateNew = () => {
       try {
         const res = await axios.post("/api/posts/create", {
           content,
-          tags: tags ?? "",
+          tags: tags.trim() === "" ? null : tags,
         });
 
         if (!res) {

@@ -38,7 +38,7 @@ const Navbar = async () => {
         ) : (
           <div className="flex gap-3 items-center">
             <Link
-              className="bg-primary border-2 border-primary hover:bg-transparent transition-all duration-200 font-semibold p-2 rounded-2xl"
+              className="bg-slate-700 transition-all duration-200 font-semibold px-4 py-2 rounded-2xl"
               href="/auth/login"
             >
               Sign In

@@ -15,6 +15,7 @@ const config: Config = {
         mRed: "#EF476F",
         mYellow: "#FFD166",
         mGreen: "#06D6A0",
+        mViolet: "#9d4edd",
         // primary: "#96C5F7",
         // primary: "#48ACF0",
         primary: "#3F8EFC",
