@@ -12,7 +12,7 @@ interface PostProp {
   content: string;
   tags?: string[];
   like?: Like[];
-  author?: User | null;
+  author?: Partial<User> | null;
   authorId?: string;
   comments: Comment[];
   createdAt?: Date;
