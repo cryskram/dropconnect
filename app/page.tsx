@@ -2,6 +2,7 @@ import PostCard from "@/components/cards/post";
 import prisma from "@/lib/prisma";
 import { getServerSession } from "next-auth";
 import { authOptions } from "./api/auth/[...nextauth]/options";
+import CreateNew from "@/components/cards/createNew";
 
 const getPosts = () => {
   const posts = prisma.post.findMany({
@@ -36,17 +37,22 @@ export default async function Home() {
       ) : (
         <div>
           {session ? (
-            <div>
-              {posts.map((post) => (
-                <div key={post.id}>
-                  <PostCard
-                    post={post}
-                    image={post.author.image as string}
-                    author={post.author.profile?.username}
-                    mUserId={session.user.id}
-                  />
-                </div>
-              ))}
+            <div className="flex flex-col gap-2">
+              <div>
+                <CreateNew />
+              </div>
+              <div>
+                {posts.map((post) => (
+                  <div key={post.id}>
+                    <PostCard
+                      post={post}
+                      image={post.author.image as string}
+                      author={post.author.profile?.username}
+                      mUserId={session.user.id}
+                    />
+                  </div>
+                ))}
+              </div>
             </div>
           ) : (
             <div>

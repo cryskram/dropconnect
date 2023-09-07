@@ -22,7 +22,7 @@ const Navbar = async () => {
         {session ? (
           <Link
             href={`/user/${session.user.id}`}
-            className="flex items-center gap-2 bg-slate-700 px-4 py-2 rounded-full"
+            className="flex items-center gap-2 bg-slate-700 px-3 py-2 rounded-xl"
           >
             <Image
               className="rounded-full border-2 border-slate-300"
@@ -31,7 +31,9 @@ const Navbar = async () => {
               height={32}
               alt="pfp"
             />
-            <h1 className="font-semibold">{session.user?.name}</h1>
+            <h1 className="font-semibold hidden sm:block">
+              {session.user?.name}
+            </h1>
           </Link>
         ) : (
           <div className="flex gap-3 items-center">

@@ -11,7 +11,7 @@ export async function PUT(
   const postId = params.id;
 
   if (!session) {
-    return NextResponse.json({ message: "Unauthorized" }, { status: 404 });
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
   }
 
   try {

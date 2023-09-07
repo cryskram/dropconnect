@@ -39,7 +39,7 @@ export default function RootLayout({
       <body className={`${nunito.className} bg-slate-900 text-mWhite`}>
         <AuthProvider>
           <Navbar />
-          <main className="p-10">{children}</main>
+          <main className="p-5">{children}</main>
         </AuthProvider>
       </body>
     </html>
