@@ -8,6 +8,8 @@ import axios from "axios";
 import Link from "next/link";
 import { useState } from "react";
 
+require("dotenv").config();
+
 interface PostProp {
   id: string;
   content: string;
@@ -34,9 +36,13 @@ const PostCard = ({ post, image, author, mUserId }: PostCardProp) => {
     const text =
       process.env.NODE_ENV === "development"
         ? `http://localhost:3000/posts/${post.id}`
-        : `${process.env.NEXTAUTH_URL}/posts/${post.id}`;
+        : `https://dropconnect.vercel.app/posts/${post.id}`;
     navigator.clipboard.writeText(text);
     setCopied(true);
+
+    setTimeout(() => {
+      setCopied(false);
+    }, 2000);
   };
 
   const handlePostDelete = async () => {
