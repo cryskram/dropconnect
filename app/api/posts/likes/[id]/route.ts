@@ -23,26 +23,17 @@ export async function PUT(
       return NextResponse.json({ message: "Post not found" }, { status: 404 });
     }
 
-    // check if user has already liked :(
-    const existingLike = await prisma.like.findFirst({
+    await prisma.like.upsert({
       where: {
+        userId_postId: {
+          userId: session.user.id,
+          postId,
+        },
+      },
+      update: {},
+      create: {
         postId,
         userId: session.user.id,
-      },
-    });
-
-    if (existingLike) {
-      return NextResponse.json(
-        { message: "Post already liked" },
-        { status: 400 }
-      );
-    }
-
-    // else create the like
-    await prisma.like.create({
-      data: {
-        userId: session.user.id as string,
-        postId,
       },
     });
 
@@ -52,6 +43,47 @@ export async function PUT(
     );
   } catch (error) {
     console.error("Error liking", error);
+    return NextResponse.json(
+      { error: "Internal server error" },
+      { status: 500 }
+    );
+  }
+}
+
+export async function DELETE(
+  request: Request,
+  { params }: { params: { id: string } }
+) {
+  const session = await getServerSession(authOptions);
+
+  if (!session) {
+    return NextResponse.json({ message: "Unauthorized" }, { status: 401 });
+  }
+
+  try {
+    const findPost = await prisma.post.findUnique({
+      where: { id: params.id },
+    });
+
+    if (!findPost) {
+      return NextResponse.json({ message: "Post not found" }, { status: 404 });
+    }
+
+    await prisma.like.delete({
+      where: {
+        userId_postId: {
+          userId: session.user.id,
+          postId: params.id,
+        },
+      },
+    });
+
+    return NextResponse.json(
+      { message: "Post unliked successfully" },
+      { status: 200 }
+    );
+  } catch (error) {
+    console.error("Error unliking", error);
     return NextResponse.json(
       { error: "Internal server error" },
       { status: 500 }

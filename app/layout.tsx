@@ -3,6 +3,8 @@ import "./globals.css";
 import type { Metadata } from "next";
 import { Nunito } from "next/font/google";
 import AuthProvider from "@/components/provider/AuthProvider";
+import { getServerSession } from "next-auth";
+import { authOptions } from "./api/auth/[...nextauth]/options";
 
 const nunito = Nunito({ subsets: ["latin"] });
 
@@ -29,11 +31,12 @@ export const metadata: Metadata = {
   },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const session = await getServerSession(authOptions);
   return (
     <html lang="en">
       <body className={`${nunito.className} bg-slate-900 text-mWhite`}>

@@ -28,6 +28,8 @@ model Like {
   post   Post   @relation(fields: [postId], references: [id])
   userId String
   postId String
+
+  @@unique([userId, postId])
 }
 
 model Post {
