@@ -1,14 +1,11 @@
 "use client";
 
-import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import { Profile, User } from "@prisma/client";
-import { getServerSession } from "next-auth";
 import { signOut, useSession } from "next-auth/react";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { FaInstagram, FaTwitter } from "react-icons/fa";
-import Spinner from "../Spinner";
 
 interface UserCardProp {
   profile: Profile | null;

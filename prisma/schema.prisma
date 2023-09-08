@@ -18,14 +18,14 @@ model Profile {
   gender    String?
   twitter   String?
   instagram String?
-  user      User    @relation(fields: [userId], references: [id])
+  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId    String  @unique
 }
 
 model Like {
   id     String @id @default(cuid())
-  user   User   @relation(fields: [userId], references: [id])
-  post   Post   @relation(fields: [postId], references: [id])
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  post   Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
   userId String
   postId String
 
@@ -36,7 +36,7 @@ model Post {
   id        String    @id @default(cuid())
   content   String
   tags      String[]  @default([])
-  author    User      @relation(fields: [authorId], references: [id])
+  author    User      @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId  String
   comments  Comment[]
   createdAt DateTime  @default(now())
@@ -50,9 +50,9 @@ model Comment {
   upvote    Int?     @default(0)
   downvote  Int?     @default(0)
   likes     Int?     @default(0)
-  post      Post?    @relation(fields: [postId], references: [id])
+  post      Post?    @relation(fields: [postId], references: [id], onDelete: Cascade)
   postId    String?
-  author    User     @relation(fields: [authorId], references: [id])
+  author    User     @relation(fields: [authorId], references: [id], onDelete: Cascade)
   authorId  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

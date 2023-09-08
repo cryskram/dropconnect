@@ -4,7 +4,10 @@ import prisma from "@/lib/prisma";
 const getTaggedPosts = (tag: string) => {
   const posts = prisma.post.findMany({
     where: {
-      tags: { has: tag },
+      tags: { has: tag.replaceAll("%20", " ") },
+    },
+    orderBy: {
+      createdAt: "desc",
     },
     include: {
       comments: true,
