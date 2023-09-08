@@ -30,6 +30,7 @@ interface PostCardProp {
 
 const PostCard = ({ post, image, author, mUserId }: PostCardProp) => {
   const [copied, setCopied] = useState(false);
+  const [likePing, setLikePing] = useState(false);
   const [liked, setLiked] = useState(
     post.like?.some((like) => like.userId === mUserId)
   );
@@ -70,6 +71,7 @@ const PostCard = ({ post, image, author, mUserId }: PostCardProp) => {
           throw new Error("Error unliking the post");
         }
         setLikesCount(likesCount - 1);
+        setLikePing(false);
       } else {
         const res = axios.put(`/api/posts/likes/${post.id}`, {
           postId: post.id,
@@ -80,11 +82,16 @@ const PostCard = ({ post, image, author, mUserId }: PostCardProp) => {
         }
 
         setLikesCount(likesCount + 1);
+        setLikePing(true);
+        setTimeout(() => {
+          setLikePing(false);
+        }, 800);
       }
 
       setLiked(!liked);
     } catch (err) {
       console.error("Error liking/unliking post: ", err);
+      setLikePing(false);
     }
   };
 
@@ -158,7 +165,15 @@ const PostCard = ({ post, image, author, mUserId }: PostCardProp) => {
           className="bg-slate-700 px-4 py-2 rounded-xl"
         >
           <div className="flex gap-2 items-center justify-center text-mRed">
-            {liked ? <FaHeart /> : <FaRegHeart />}
+            {liked ? (
+              likePing ? (
+                <FaHeart className="animate-ping" />
+              ) : (
+                <FaHeart />
+              )
+            ) : (
+              <FaRegHeart />
+            )}
             <h1 className="hidden font-bold sm:block">Like</h1>
           </div>
         </button>
