@@ -15,7 +15,6 @@ model Profile {
   username  String  @unique
   bio       String? @default("")
   age       Int?    @default(0)
-  gender    String?
   twitter   String?
   instagram String?
   user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)

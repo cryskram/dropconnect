@@ -90,7 +90,7 @@ const UserCard = ({
               <div className="flex">
                 <Link
                   className="p-2 rounded-l-2xl text-slate-900 font-semibold bg-mYellow"
-                  href="/"
+                  href={`/user/settings/${session.user.id}`}
                 >
                   Settings
                 </Link>
