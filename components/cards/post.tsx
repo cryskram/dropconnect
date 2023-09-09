@@ -63,35 +63,39 @@ const PostCard = ({ post, image, author, mUserId }: PostCardProp) => {
     }
   };
   const handleLikeClick = async () => {
-    try {
-      if (liked) {
-        const res = await axios.delete(`/api/posts/likes/${post.id}`);
+    if (mUserId) {
+      try {
+        if (liked) {
+          const res = await axios.delete(`/api/posts/likes/${post.id}`);
 
-        if (!res) {
-          throw new Error("Error unliking the post");
-        }
-        setLikesCount(likesCount - 1);
-        setLikePing(false);
-      } else {
-        const res = axios.put(`/api/posts/likes/${post.id}`, {
-          postId: post.id,
-        });
-
-        if (!res) {
-          throw new Error("Error liking the post");
-        }
-
-        setLikesCount(likesCount + 1);
-        setLikePing(true);
-        setTimeout(() => {
+          if (!res) {
+            throw new Error("Error unliking the post");
+          }
+          setLikesCount(likesCount - 1);
           setLikePing(false);
-        }, 800);
-      }
+        } else {
+          const res = axios.put(`/api/posts/likes/${post.id}`, {
+            postId: post.id,
+          });
 
-      setLiked(!liked);
-    } catch (err) {
-      console.error("Error liking/unliking post: ", err);
-      setLikePing(false);
+          if (!res) {
+            throw new Error("Error liking the post");
+          }
+
+          setLikesCount(likesCount + 1);
+          setLikePing(true);
+          setTimeout(() => {
+            setLikePing(false);
+          }, 800);
+        }
+
+        setLiked(!liked);
+      } catch (err) {
+        console.error("Error liking/unliking post: ", err);
+        setLikePing(false);
+      }
+    } else {
+      alert("Login to like the post");
     }
   };
 

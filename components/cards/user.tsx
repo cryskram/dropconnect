@@ -92,7 +92,7 @@ const UserCard = ({
                   className="p-2 rounded-l-2xl text-slate-900 font-semibold bg-mYellow"
                   href="/"
                 >
-                  Edit Profile
+                  Settings
                 </Link>
                 <button
                   className="p-2 bg-mRed rounded-r-2xl font-semibold"
