@@ -34,6 +34,8 @@ const PostCard = ({ post, image, author, mUserId }: PostCardProp) => {
   const [liked, setLiked] = useState(
     post.like?.some((like) => like.userId === mUserId)
   );
+  console.log(mUserId);
+  console.log(post.like);
   const [likesCount, setLikesCount] = useState(post.like?.length ?? 0);
 
   const handleShare = () => {
@@ -63,7 +65,9 @@ const PostCard = ({ post, image, author, mUserId }: PostCardProp) => {
     }
   };
   const handleLikeClick = async () => {
-    if (mUserId) {
+    if (!mUserId) {
+      alert("Login to like the post");
+    } else {
       try {
         if (liked) {
           const res = await axios.delete(`/api/posts/likes/${post.id}`);
@@ -94,8 +98,6 @@ const PostCard = ({ post, image, author, mUserId }: PostCardProp) => {
         console.error("Error liking/unliking post: ", err);
         setLikePing(false);
       }
-    } else {
-      alert("Login to like the post");
     }
   };
 

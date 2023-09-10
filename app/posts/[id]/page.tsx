@@ -1,9 +1,11 @@
+import { authOptions } from "@/app/api/auth/[...nextauth]/options";
 import PostCard from "@/components/cards/post";
 import prisma from "@/lib/prisma";
+import { getServerSession } from "next-auth";
 import React from "react";
 
 const getParamPost = (id: string) => {
-  const post = prisma.post.findMany({
+  const post = prisma.post.findUnique({
     where: {
       id,
     },
@@ -28,21 +30,35 @@ const getParamPost = (id: string) => {
 
 const PostPage = async ({ params }: { params: { id: string } }) => {
   const post = await getParamPost(params.id);
+  const session = await getServerSession(authOptions);
 
   return (
     <div className="w-full md:w-3/4 mx-auto">
-      <PostCard
-        post={post[0]}
-        image={post[0].author.image as string}
-        author={post[0].author.profile?.username}
-      />
-      <div>
-        {post[0].comments.map((comment) => (
+      {session ? (
+        <div>
+          <PostCard
+            post={post!}
+            image={post?.author.image as string}
+            author={post?.author.profile?.username}
+            mUserId={session?.user.id}
+          />
+        </div>
+      ) : (
+        <div>
+          <PostCard
+            post={post!}
+            image={post?.author.image as string}
+            author={post?.author.profile?.username}
+          />
+        </div>
+      )}
+      {/* <div>
+        {post?.comments.map((comment) => (
           <div key={comment.id}>
             <h1>{comment.data}</h1>
           </div>
         ))}
-      </div>
+      </div> */}
     </div>
   );
 };
